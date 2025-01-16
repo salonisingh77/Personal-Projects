@@ -36,4 +36,27 @@ public class IncomeControlller {
                     throw new RestClientException(ex.getMessage());
                 }
     }
+    @GetMapping("/getAllIncome")
+    public ResponseEntity<List<IncomeDTO>> getAllIncomeSorting(){
+        try{
+            List<IncomeDTO> incomeList=  incomeService.getAllIncomeSorting();
+            return ResponseEntity.status(HttpStatus.OK).body(incomeList);
+        }catch (RestClientException ex) {
+            throw new RestClientException(ex.getMessage());
+        }
+    }
+
+    @PutMapping("/updateIncome/{id}")
+    public ResponseEntity<Income> updateIncome(@PathVariable Long id ,@RequestBody IncomeDTO incomeDTO)
+    {
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(incomeService.updateIncome(id,incomeDTO));
+
+        }
+        catch(RestClientException ex)
+        {
+            throw new RestClientException(ex.getMessage());
+        }
+    }
+
 }
