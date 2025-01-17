@@ -10,4 +10,6 @@ public interface IncomeService {
     public List<IncomeDTO> getAllIncomeSorting();
     public Income saveOrUpdate(IncomeDTO incomeDTO);
     public Income updateIncome(Long id, IncomeDTO incomeDTO);
+    public IncomeDTO getIncomeById(Long id);
+    public void deleteIncomeById(Long id);
 }

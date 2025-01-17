@@ -53,4 +53,29 @@ else
     throw new EntityNotFoundException("Income not found with the title "+incomeDTO.getTitle());
 
 }
+
+    @Override
+    public IncomeDTO getIncomeById(Long id) {
+        Optional<Income> income=incomeRepository.findById(id);
+        if(income.isPresent())
+        {
+            return income.get().getIncomeDTO();
+        }
+        else{
+throw new EntityNotFoundException("Entity not found with this ID "+id);
+        }
+    }
+
+    @Override
+    public void deleteIncomeById(Long id) {
+        Optional<Income> income=incomeRepository.findById(id);
+        if(income.isPresent())
+        {
+           incomeRepository.deleteById(id);
+        }
+        else{
+            throw new EntityNotFoundException("Entity not found with this Id "+id);
+        }
+
+    }
 }
