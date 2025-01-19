@@ -12,5 +12,5 @@ public interface IncomeService {
     public Income updateIncome(Long id, IncomeDTO incomeDTO);
     public IncomeDTO getIncomeById(Long id);
     public void deleteIncomeById(Long id);
-    public List<Income> 
+    public List<Income>  findbydate();
 }

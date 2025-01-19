@@ -6,6 +6,8 @@ import com.Project.ExpenseTracker.repository.IncomeRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Comparator;
 import java.util.List;
@@ -77,5 +79,22 @@ throw new EntityNotFoundException("Entity not found with this ID "+id);
             throw new EntityNotFoundException("Entity not found with this Id "+id);
         }
 
+    }
+
+    @Override
+    public List<Income> findbydate() {
+        LocalDate endDate = LocalDate.now(); // Today's date
+        LocalDate startDate = endDate.minusDays(27); // 27 days ago
+
+        // Log the calculated date range
+        System.out.println("Start Date: " + startDate + ", End Date: " + endDate);
+
+        List<Income> incomes = incomeRepository.findByDateBetween(startDate, endDate);
+        if (incomes.isEmpty()) {
+            System.out.println("No data found in the given date range.");
+        } else {
+            incomes.forEach(income -> System.out.println(income.getTitle() + " - " + income.getDate()));
+        }
+return incomes;
     }
 }

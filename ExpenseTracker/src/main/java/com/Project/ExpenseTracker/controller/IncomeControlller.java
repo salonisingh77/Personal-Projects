@@ -83,5 +83,10 @@ public class IncomeControlller {
         }
         
     }
+    @GetMapping("/allIncome")
+    public List<Income> getallIncome()
+    {
+        return incomeService.findbydate();
+    }
 
 }
