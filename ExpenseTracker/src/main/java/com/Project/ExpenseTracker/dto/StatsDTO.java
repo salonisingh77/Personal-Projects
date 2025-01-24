@@ -10,4 +10,11 @@ public class StatsDTO {
     private Expense latestExpense;
     private Income latestIncome;
 
+    private Double maxIncome;
+    private Double minIncome;
+    private Double balance;
+    private Double maxExpense;
+    private Double minExpense;
+
+
 }
