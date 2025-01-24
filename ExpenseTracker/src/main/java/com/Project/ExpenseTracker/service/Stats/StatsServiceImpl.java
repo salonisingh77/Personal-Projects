@@ -1,6 +1,7 @@
 package com.Project.ExpenseTracker.service.Stats;
 
 import com.Project.ExpenseTracker.dto.GraphDTO;
+import com.Project.ExpenseTracker.dto.StatsDTO;
 import com.Project.ExpenseTracker.entity.Expense;
 import com.Project.ExpenseTracker.entity.Income;
 import com.Project.ExpenseTracker.repository.ExpenseRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,9 +29,30 @@ public class StatsServiceImpl implements  StatsService{
         List<Income> incomeList=incomeRepository.findByDateBetween(startDate,endDate);
 
         graph.setExpenseList(expenseList);
-        graph.setIncomeList(incomeList);
+       graph.setIncomeList(incomeList);
 
 
         return graph;
     }
+    public StatsDTO getStats()
+    {
+        Double totalIncome=incomeRepository.sumAmount();
+        Double totalExpense= expenseRepository.sumAmount();
+
+        Optional<Income> optionalIncome=incomeRepository.findFirstByOrderByDateDesc();
+        Optional<Expense> optionalExpense=expenseRepository.findFirstByOrderByDateDesc();
+        StatsDTO statsDTO =new StatsDTO();
+        statsDTO.setExpense(totalExpense);
+        statsDTO.setIncome(totalIncome);
+//        if(optionalIncome.isPresent())
+//            statsDTO.setLatestIncome(optionalIncome.get());
+optionalIncome.ifPresent(statsDTO::setLatestIncome);
+optionalExpense.ifPresent((statsDTO::setLatestExpense));
+//        if(optionalExpense.isPresent())
+//            statsDTO.setLatestExpense(optionalExpense.get());
+
+        return statsDTO;
+
+    }
+
 }
